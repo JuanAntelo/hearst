@@ -21,33 +21,32 @@ import ContentRow from '../ContentRow/ContentRow'
     ]
 
     const contentDataD: Content[] = []
-*/
-function ProductGrid() {
-    // Hardcoded Data
-    const headerText = "Products"
 
-    const hardCodedProducts: Product[] = [
+    -
+    Also Support ProductData:
+    [
         { "product_id": 1, "title": "Product A", "image": "https://picsum.photos/id/6/200" },
         { "product_id": 2, "title": "Gizmo B", "image": "https://picsum.photos/id/11/200" },
         { "product_id": 3, "title": "Widget C", "image": "https://picsum.photos/id/40/200" },
-        { "product_id": 4, "title": "Product A", "image": "https://picsum.photos/id/6/200" },
-        { "product_id": 5, "title": "Gizmo B", "image": "https://picsum.photos/id/11/200" },
-        { "product_id": 6, "title": "Widget C", "image": "https://picsum.photos/id/40/200" },
-        { "product_id": 7, "title": "Product A", "image": "https://picsum.photos/id/6/200" },
     ]
+*/
 
-    const contentData: Content[] = [
-        { "type": "html", "contents": "<p>This is row 1 of content.</p>", "position": "row-1" },
-        { "type": "html", "contents": "<p>This is row 3 of content.</p>", "position": "row-3" }
-    ]
+interface ProductGridProps {
+    content: Content[]
+    products: Product[]
+
+}
+
+function ProductGrid({content, products}: ProductGridProps) {
+    const headerText = "Products"
 
     // This variable will render the final jsx
     let productGridRender = []
 
     // This conditional is to support contentData being empty (i.e same render as Part 1)
-    if ( contentData.length === 0 ) {
+    if ( content.length === 0 ) {
         productGridRender.push(
-            hardCodedProducts.map((product) => {
+            products.map((product) => {
                 return (
                     <div className="col-md-4 col-sm-12" key={product.product_id}>
                         <ProductView product={product}/>
@@ -60,13 +59,13 @@ function ProductGrid() {
     // Now to support content positions 1 and/or 3 
     let contentDataPositions = []
 
-    for ( let i = 0; i < contentData.length; i++ ) {
-        const contentDataPosition = extractRowPosition(contentData[i])
+    for ( let i = 0; i < content.length; i++ ) {
+        const contentDataPosition = extractRowPosition(content[i])
         contentDataPositions.push(contentDataPosition)
     }
 
     // Handle row-1 
-    let firstGrid = hardCodedProducts.slice(0, 3)
+    let firstGrid = products.slice(0, 3)
 
     if ( contentDataPositions.indexOf(1) !== -1 ) {
         productGridRender.push(<ContentRow content={getContentDataItemFromRowPosition(1)!}/>)
@@ -87,7 +86,7 @@ function ProductGrid() {
         productGridRender.push(<ContentRow content={getContentDataItemFromRowPosition(3)!}/>)
     }
 
-    let secondGrid = hardCodedProducts.slice(3)
+    let secondGrid = products.slice(3)
 
     productGridRender.push(
         secondGrid.map((product) => {
@@ -107,8 +106,8 @@ function ProductGrid() {
     }
 
     function getContentDataItemFromRowPosition(rowPosition: number) {
-        for ( let i = 0; i < contentData.length; i++ ) {
-            const contentDataItem = contentData[i]
+        for ( let i = 0; i < content.length; i++ ) {
+            const contentDataItem = content[i]
             if (contentDataItem.position === ("row-" + rowPosition.toString())  ) {
                 return contentDataItem
             }
