@@ -125,23 +125,3 @@ function ProductGrid({content, products}: ProductGridProps) {
 }
 
 export default ProductGrid
-
-
-/*
-    return (
-        <div className="container text-center">
-            <p>{headerText}</p>
-            <div className="row">
-                {
-                    hardCodedProducts.map((product) => {
-                        return (
-                            <div className="col-md-4 col-sm-12" key={product.product_id}>
-                                <ProductView product={product}/>
-                            </div>
-                        )
-                    })
-                }
-            </div>
-        </div>
-    )
-*/
