@@ -1,3 +1,4 @@
+import './ProductCard.css'
 import Product from "../../types/Product"
 
 interface ProductViewProps {
