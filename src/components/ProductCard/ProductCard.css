@@ -1,0 +1,11 @@
+.product-card {
+    border: 1px solid #eee;
+}
+
+.product-card:hover {
+    cursor: pointer;
+}
+
+.product-modal-content img {
+    width: 100%;
+}

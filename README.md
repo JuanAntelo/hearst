@@ -1,11 +1,9 @@
 Overview:
 
-Part 3
-Load product and content data from their respective API endpoints below.
-GET https://cx-interview-api.dev.ecmapps.com/products?page=${pagePath}
-GET https://cx-interview-api.dev.ecmapps.com/content?page=${pagePath}
-For this prompt, your pagePath will be “hello-world”.
-The data should be rendered in the grid per parts 1 and 2 of the prompt.
+Part 4
+Build a simple modal that displays the product image at a larger size when a product card is clicked. The modal
+should be centered and positioned over the rest of the page content, and should have a button to close. See
+below for a mockup.
 
 Points from Juan to bring up:
 - Definition of a "desktop view", am assuming that desktop view is any screen greater than 768px

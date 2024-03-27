@@ -68,7 +68,7 @@ function ProductGrid({content, products}: ProductGridProps) {
     let firstGrid = products.slice(0, 3)
 
     if ( contentDataPositions.indexOf(1) !== -1 ) {
-        productGridRender.push(<ContentRow content={getContentDataItemFromRowPosition(1)!}/>)
+        productGridRender.push(<ContentRow key={1} content={getContentDataItemFromRowPosition(1)!}/>)
     } 
 
     productGridRender.push(
@@ -83,7 +83,7 @@ function ProductGrid({content, products}: ProductGridProps) {
 
     // Handle row-3 / the rest of the products
     if ( contentDataPositions.indexOf(3) !== -1 ) {
-        productGridRender.push(<ContentRow content={getContentDataItemFromRowPosition(3)!}/>)
+        productGridRender.push(<ContentRow key={3} content={getContentDataItemFromRowPosition(3)!}/>)
     }
 
     let secondGrid = products.slice(3)
