@@ -3,28 +3,51 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ProductGrid from './components/ProductGrid/ProductGrid'
 import Product from './types/Product'
 import Content from './types/Content'
+import { useEffect, useState } from 'react'
 
 function App() {
+  const [productData, setProductData] = useState<Product[] | null>();
+  const [contentData, setContentData] = useState<Content[] | null>();
+  const [error, setError] = useState(null);
 
-  const hardCodedProducts: Product[] = [
-    { "product_id": 1, "title": "Product A", "image": "https://picsum.photos/id/6/200" },
-    { "product_id": 2, "title": "Gizmo B", "image": "https://picsum.photos/id/11/200" },
-    { "product_id": 3, "title": "Widget C", "image": "https://picsum.photos/id/40/200" },
-    { "product_id": 4, "title": "Product A", "image": "https://picsum.photos/id/6/200" },
-    { "product_id": 5, "title": "Gizmo B", "image": "https://picsum.photos/id/11/200" },
-    { "product_id": 6, "title": "Widget C", "image": "https://picsum.photos/id/40/200" },
-    { "product_id": 7, "title": "Product A", "image": "https://picsum.photos/id/6/200" },
-  ]
+  const fetchData = async () => {
+    // Only 2 endpoints so just do them one after the other, if one endpoint fails then 
+    // auto fail both requests and return error to user
+    try {
+      // Fetch products
+      const productResponse = await fetch("https://cx-interview-api.dev.ecmapps.com/products?page=hello-world");
+      if (!productResponse.ok) {
+        throw new Error(`HTTP error: Status ${productResponse.status}`);
+      }
+      let productDataJSON = await productResponse.json();
+      setProductData(productDataJSON.products);
+      
+      // Fetch content
+      const contentResponse = await fetch("https://cx-interview-api.dev.ecmapps.com/content?page=hello-world");
+      if (!contentResponse.ok) {
+        throw new Error(`HTTP error: Status ${contentResponse.status}`);
+      }
+      let contentDataJSON = await contentResponse.json();
+      setContentData(contentDataJSON.data);
+      
+      // Success so set error state to null
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+      setProductData(null);
+      setContentData(null)
+    }
+  };
 
-  const contentData: Content[] = [
-      { "type": "html", "contents": "<p>This is row 1 of content.</p>", "position": "row-1" },
-      { "type": "html", "contents": "<p>This is row 3 of content.</p>", "position": "row-3" }
-  ]
+  useEffect(() => {
+    fetchData();
+  }, []);
 
 
   return (
     <>
-      <ProductGrid products={hardCodedProducts} content={contentData}/>
+      {error && <div className="text-danger">{error}</div>}
+      {productData && contentData && <ProductGrid products={productData} content={contentData}/>}
     </>
   )
 }
